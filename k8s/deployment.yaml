@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-runner
+  labels:
+    app: llm-runner
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: llm-runner
+  template:
+    metadata:
+      labels:
+        app: llm-runner
+    spec:
+      containers:
+        - name: llm-runner
+          image: ghcr.io/ggml-org/llama.cpp:server@sha256:f415de2e2c3e61b3dfab40d7fd26136c13d342c1ae4b3ffa8657fcc6a2f43d60
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: llm-runner
+          volumeMounts:
+            - name: models
+              mountPath: /models
+              readOnly: true
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: 4Gi
+              cpu: "2"
+            limits:
+              memory: 7Gi
+      volumes:
+        - name: models
+          hostPath:
+            path: __MODELS_DIR__
+            type: Directory

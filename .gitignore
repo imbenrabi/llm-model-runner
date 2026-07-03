@@ -2,3 +2,4 @@
 /models
 *.gguf
 /.worktrees
+/.runner
