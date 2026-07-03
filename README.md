@@ -81,6 +81,19 @@ Stop the server:
 make stop  # ./target/release/llm-runner stop
 ```
 
+## Web UI
+
+`llama-server` ships a built-in browser chat UI, on by default — no extra
+install, no separate process. After `make start`, open
+http://127.0.0.1:8080/ to chat with the model instead of using curl (the
+Kubernetes path serves the same UI at http://localhost:30080/ after `make
+k8s-start`). It's the same loopback-bound process, so the fully-local
+guarantee holds — conversations stay in the browser.
+
+Note: the UI needs a browser — `curl` without `--compressed` against `/`
+returns a short error; `/v1/*` endpoints are unaffected. Add `--no-webui`
+to the server invocation to turn it off (this runner does not pass it).
+
 ## Make targets
 
 A `Makefile` at the repository root wraps the commands above:
