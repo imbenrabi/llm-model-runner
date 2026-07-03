@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: llm-runner
+data:
+  LLAMA_ARG_MODEL: "/models/qwen2.5-coder-7b-instruct-q4_k_m.gguf"
+  LLAMA_ARG_HOST: "0.0.0.0"
+  LLAMA_ARG_PORT: "8080"
+  LLAMA_ARG_CTX_SIZE: "8192"
+  LLAMA_ARG_N_GPU_LAYERS: "0"

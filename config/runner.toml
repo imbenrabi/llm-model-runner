@@ -1,0 +1,5 @@
+model_path = "models/qwen2.5-coder-7b-instruct-q4_k_m.gguf"
+host = "127.0.0.1"
+port = 8080
+ctx_size = 8192
+n_gpu_layers = 99
