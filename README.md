@@ -115,6 +115,9 @@ Settings live in `config/runner.toml`:
 
 The server binds `127.0.0.1` only (loopback) — nothing leaves the machine.
 
+`start`, `status`, and `verify` accept `--config <path>` to point at an
+alternate config file (default `config/runner.toml`).
+
 Model swapping is done by editing `model_path`. On a machine with at least
 256 GB of unified memory, this same runner serves a GLM-5.2 GGUF unmodified —
 download it and change that one line.
@@ -158,7 +161,11 @@ Four checks establish that this setup is 100% local:
    Quickstart. `llm-runner verify` (no flag) automates checks 1 and 2 in a
    single command.
 3. Offline test: turn Wi-Fi off, repeat the chat completion request, confirm
-   it still succeeds, then restore Wi-Fi.
+   it still succeeds, then restore Wi-Fi. If the machine also has a wired
+   connection (Ethernet or a Thunderbolt dock), disable that network service
+   too — e.g. `networksetup -setnetworkserviceenabled "<service name>" off` —
+   since Wi-Fi alone may not be the active route (`route get default` shows
+   the live interface).
 
 ```bash
 networksetup -listallhardwareports
